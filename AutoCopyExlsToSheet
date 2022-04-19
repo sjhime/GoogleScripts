@@ -6,7 +6,7 @@ function onOpen() {
 }
 */
 function main() {
-  let fileName = "LHS Staff_2.xlsm";
+  let fileName = "LHS_Staff_QRCode.xlsm";
 
   let sheetName = "QRCode";
 
@@ -30,7 +30,6 @@ function promptUser(message) {
   }
 }
 
-
 function convertExcelToGoogleSheets(fileName) {
   let files = DriveApp.getFilesByName(fileName);
   let excelFile = null;
@@ -51,10 +50,18 @@ function convertExcelToGoogleSheets(fileName) {
 function importDataFromSpreadsheet(spreadsheetId, sheetName) {
   let spreadsheet = SpreadsheetApp.openById(spreadsheetId);
   let currentSpreadsheet = SpreadsheetApp.getActive();
-  let newSheet = currentSpreadsheet.insertSheet();
-  SpreadsheetApp.getActiveSpreadsheet().rename("QRCode");
+    deleteQRCode()
+  let newSheet = currentSpreadsheet.insertSheet("QRCode");
   let dataToImport = spreadsheet.getSheetByName(sheetName).getDataRange();
   let range = newSheet.getRange(1,1,dataToImport.getNumRows(), dataToImport.getNumColumns());
   range.setValues(dataToImport.getValues());
   return newSheet.getName();
 }
+
+/*
+function myCleanup() {
+  let fileName = "[Google Sheets] LHS_Staff_QRCode.xlsm";
+  DriveApp.getFilesByName(fileName).next().SetTrashed(true);
+  toast('Cleaning up files');
+}
+*/
