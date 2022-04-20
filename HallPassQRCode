@@ -1,0 +1,46 @@
+var hallPassForm = FormApp.openById("19VexjWjU3X_wrKkc6R9qAHZG2mnL5fTBn7yUgWgpHtI");
+var ss = SpreadsheetApp.openById("1PsB4fxp-Py38OTZszwuB_N1dMhZ556fjcMBsTDVk3mA");
+var file = DriveApp.getFileById('19VexjWjU3X_wrKkc6R9qAHZG2mnL5fTBn7yUgWgpHtI');
+var editors = file.getEditors();
+var i = 2;
+var cell = ss.getRange("D"+i);
+var test = cell.isBlank();
+for (var i = 0; i < editors.length; i++) {
+  var fullname = (editors[i].getName());
+}
+while(test != true) {
+  i++;
+  cell = ss.getRange("D"+i);
+  test = cell.isBlank();
+  console.log(i);
+}
+
+function getUserName(){
+  cell.setValue(fullname)
+}
+
+function doGet() {
+   var html = HtmlService.createTemplateFromFile("welcomeBack");
+   return html.evaluate().setTitle("Welcom Back!");
+}
+
+function runScript() {
+   var url = ScriptApp.getService().getUrl();
+   var script = "<script>window.open('" + url + "', '_blank').focus();google.script.host.close();</script>";
+   var html = HtmlService.createHtmlOutput(script);
+   FormApp.getUi().showModalDialog(html, 'welcome Back');
+}
+
+function welcomeBack(){
+  var timeInCell = ss.getRange("E"+i);
+  var timeTest = timeInCell.isBlank();
+  var d = new Date();
+  var val = timeInCell.getValue();
+  var currentTime = d.toLocaleTimeString();
+  if (timeTest == true){
+    timeInCell.setValue("Not Back");
+  }
+  if (val == "Not Back") {
+    timeInCell.setValue(currentTime);
+  }
+}
