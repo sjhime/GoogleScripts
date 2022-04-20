@@ -1,0 +1,8 @@
+function deleteQRCode() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  //Rename QRCode to the sheet name
+  var itt = ss.getSheetByName('QRCode');
+  if (itt) {
+    ss.deleteSheet(itt);
+  }
+}
